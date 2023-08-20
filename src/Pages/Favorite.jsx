@@ -25,11 +25,11 @@ const Favorite = () => {
                 <Navs />
             </div>
             <div className="flex mx-10 mt-10">
-                <div className='w-full space-x-10 grid grid-cols-4'>
+                <div className='w-full grid grid-cols-4'>
                     {
                         (photo != null)
                             ?
-                            photo.map((photo, index) => <CardsImage key={index} image={photo.image} author={photo.author} alts={photo.alts} profiler={photo.profiler} />)
+                            photo.map((photo, index) => <CardsImage key={index} id={photo.id} image={photo.image} author={photo.author} alts={photo.alts} profiler={photo.profiler} />)
                             : ""
                     }
                 </div>

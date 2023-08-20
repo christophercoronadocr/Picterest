@@ -8,7 +8,7 @@ const CardsSeparator = ({photo}) => {
 
             <div className='w-full'>
                 {
-                    photo.map((photo, index) => <CardsImage key={photo.id} image={photo.src.portrait} author={photo.photographer} alts={photo.alt} profiler={photo.photographer_url} />)
+                    photo.map((photo, index) => <CardsImage key={index} id={photo.id} image={photo.src.portrait} author={photo.photographer} alts={photo.alt} profiler={photo.photographer_url} />)
                 }
             </div>
 

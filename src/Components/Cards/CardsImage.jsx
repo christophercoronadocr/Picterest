@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Card,
     CardHeader,
@@ -9,17 +9,47 @@ import {
 } from "@material-tailwind/react";
 
 
-const CardsImage = ({ image, author, alts, profiler }) => {
+const CardsImage = ({ id, image, author, alts, profiler }) => {
 
     const [isFavorite, setisFavorite] = useState(false)
+
+    useEffect(() => {
+
+        if (localStorage.getItem("favorite") != null) {
+            try {
+                var array = localStorage.getItem('favorite');
+                array = JSON.parse(array);
+                const photo = array.find(picture => picture.id == id);
+                if (photo) {
+                    setisFavorite(true);
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+    }, [])
+    
+
 
     const addFavorite = (isFavorite) => {
         if (isFavorite) {
             setisFavorite(false)
+            var array = localStorage.getItem('favorite');
+            array = JSON.parse(array);
+            var newArray = new Array();
+            array.forEach(element => {
+                if (element.id != id) {
+                    newArray.push(element)
+                }
+            });
+            localStorage.setItem('favorite', JSON.stringify(newArray));
         } else{
             setisFavorite(true)
 
             const dataPhoto = {
+                id,
                 image,
                 author,
                 alts,
@@ -32,7 +62,6 @@ const CardsImage = ({ image, author, alts, profiler }) => {
                     array = JSON.parse(array);
                     array.push(dataPhoto);
                     localStorage.setItem('favorite', JSON.stringify(array));
-                    console.log('se suma');
                 } catch (error) {
                     console.log(error);
                 }
@@ -40,7 +69,6 @@ const CardsImage = ({ image, author, alts, profiler }) => {
                 let arrayOfFavotite = new Array();
                 arrayOfFavotite.push(dataPhoto);
                 localStorage.setItem('favorite', JSON.stringify(arrayOfFavotite));
-                console.log("se agregó");
             }
         }
 
